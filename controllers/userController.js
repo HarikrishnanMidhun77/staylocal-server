@@ -102,6 +102,35 @@ exports.getProperties = async (req, res, next) => {
     });
 };
 
+exports.getPropertyByKey = async (req, res, next) => {
+  console.log("req.body", req.body);
+  var t = req.body.token;
+  var searchKey = req.body.propKey;
+
+  var c = {
+    method: "get",
+    url:
+      "https://ddfapi.realtor.ca/odata/v1/Property?$filter=ListingKey eq +'" +
+      searchKey +
+      "'",
+    headers: {
+      Authorization: "Bearer " + t,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    data: "",
+  };
+  console.log("c", c);
+  axios(c)
+    .then((data) => {
+      console.log("dataRes", data.data);
+      res.json(data.data);
+    })
+    .catch((err) => {
+      console.log("err", err);
+      res.json(err);
+    });
+};
+
 exports.deleteMe = async (req, res, next) => {
   try {
     await User.findByIdAndUpdate(req.user.id, {

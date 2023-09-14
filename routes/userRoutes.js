@@ -6,6 +6,7 @@ const userController = require("../controllers/userController");
 router.get("/test", (req, res) => res.json({ msg: "users work!" }));
 router.get("/getCreaToken", userController.getCreaToken);
 router.post("/getProperties", userController.getProperties);
+router.post("/getPropertyByKey", userController.getPropertyByKey);
 
 // router.post("/getProperties", (req, res) => {
 //   console.log("first");
