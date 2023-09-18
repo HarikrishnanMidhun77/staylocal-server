@@ -24,7 +24,12 @@ const makeSearchString = (searchObj) => {
   // https://ddfapi.realtor.ca/odata/v1/Property?$select=PropertySubType&$top=100
   // &$filter=PropertySubType in ['Single Family' ,'Industrial']
   console.log("searchObj2", searchObj);
-  var searchStr = "$top=5&$filter=";
+  var searchStr =
+    "$skip=" +
+    (searchObj.pageNo - 1) * searchObj.itemsNo +
+    "&$top=" +
+    searchObj.itemsNo +
+    "&$filter=";
   searchStr += "City eq '" + searchObj.cityName.city + "'";
   // searchStr +=
   //   " and PropertySubType in ['" + searchObj.property_type.in.toString() + "']";
@@ -94,7 +99,7 @@ exports.getProperties = async (req, res, next) => {
   console.log("c", c);
   axios(c)
     .then((data) => {
-      console.log("dataRes", data.data);
+      // console.log("dataRes", data.data);
       res.json(data.data);
     })
     .catch((err) => {
